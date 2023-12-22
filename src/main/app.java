@@ -10,9 +10,6 @@ package main;
  */
 public class app extends javax.swing.JFrame {
 
-    /**
-     * Creates new form app
-     */
     public app() {
         initComponents();
     }
