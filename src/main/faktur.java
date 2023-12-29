@@ -26,12 +26,13 @@ public class faktur extends javax.swing.JFrame {
     public faktur() {
         initComponents();
         TampilData();
+        updateCombo();
     }
 
     private void Bersih(){
         nomor_faktur.setText("");
         tgl_faktur.setDate(null);
-        kode_plg.setText("");
+        kode_plg.setSelectedItem(null);
        
         simpan.setText("Simpan");
         nomor_faktur.setEditable(true);
@@ -43,19 +44,16 @@ public class faktur extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM faktur");
             
             DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("No.");
             model.addColumn("Nomor Faktur");
             model.addColumn("Tanggal");
             model.addColumn("Kode Pelanggan");
             
-            int no = 1;
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             model.setRowCount(0);
             
             while(rs.next()){
               Object[]data = {
-                no ++,
                 rs.getString("nomor_faktur"),
                 rs.getString("tgl_faktur"),
                 rs.getString("kode_plg"),
@@ -67,6 +65,20 @@ public class faktur extends javax.swing.JFrame {
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "error");
         }
+    }
+    
+    private void updateCombo(){
+        String sql = "SELECT * FROM pelanggan";
+        try {
+              st = cn.createStatement();
+              rs = st.executeQuery(sql);
+
+               while(rs.next()){
+                   kode_plg.addItem(rs.getString("kode_plg"));
+               }
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "error");
+          }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,13 +94,13 @@ public class faktur extends javax.swing.JFrame {
         nomor_faktur = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        kode_plg = new javax.swing.JTextField();
         simpan = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
         batal = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         data_faktur = new javax.swing.JTable();
         tgl_faktur = new com.toedter.calendar.JDateChooser();
+        kode_plg = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +113,8 @@ public class faktur extends javax.swing.JFrame {
 
         jLabel4.setText("Kode Pelanggan");
 
+        simpan.setBackground(new java.awt.Color(51, 255, 0));
+        simpan.setForeground(new java.awt.Color(255, 255, 255));
         simpan.setText("Simpan");
         simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +122,8 @@ public class faktur extends javax.swing.JFrame {
             }
         });
 
+        hapus.setBackground(new java.awt.Color(255, 0, 0));
+        hapus.setForeground(new java.awt.Color(255, 255, 255));
         hapus.setText("Hapus");
         hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +131,8 @@ public class faktur extends javax.swing.JFrame {
             }
         });
 
+        batal.setBackground(new java.awt.Color(0, 0, 255));
+        batal.setForeground(new java.awt.Color(255, 255, 255));
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,35 +170,33 @@ public class faktur extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(nomor_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(jLabel3))
-                                    .addComponent(simpan))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(hapus)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(batal)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(347, 347, 347)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(tgl_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(simpan)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tgl_faktur, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(nomor_faktur)
+                            .addComponent(kode_plg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(batal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(hapus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(347, 347, 347)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,22 +204,27 @@ public class faktur extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(nomor_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4)
-                        .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tgl_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(simpan)
-                    .addComponent(hapus)
-                    .addComponent(batal))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nomor_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(tgl_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(simpan)
+                            .addComponent(batal)
+                            .addComponent(hapus)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,8 +234,9 @@ public class faktur extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             st = cn.createStatement();
-            if(nomor_faktur.getText().equals("") || tgl.equals("")|| kode_plg.getText().equals("")){
-                JOptionPane.showMessageDialog(null, "Data Tidak Boleh Kosong", "Validasi Data",JOptionPane.INFORMATION_MESSAGE);
+            String kodePelanggan = kode_plg.getSelectedItem().toString();
+            if (nomor_faktur.getText().isEmpty() || tgl.equals("") || kodePelanggan.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Data Tidak Boleh Kosong", "Validasi Data", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             if("Simpan".equals(simpan.getText())){
@@ -225,16 +247,15 @@ public class faktur extends javax.swing.JFrame {
                 }else{
                     String sql = "INSERT INTO faktur VALUES ('" + nomor_faktur.getText()+
                                  "','" + tgl + 
-                                 "','" + kode_plg.getText() + "')";
+                                 "','" + kodePelanggan + "')";
                     st.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
                     Bersih();
                     TampilData();
                 }
             }else{
-                //aksi ubah data
                 String update = "UPDATE faktur SET tgl_faktur = ' " + tgl  +
-                                "', kode_plg = '" + kode_plg.getText() +
+                                "', kode_plg = '" + kodePelanggan +
                                 "' WHERE nomor_faktur = '" + nomor_faktur.getText() + "'";
                 st.executeUpdate(update);
                 JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
@@ -293,9 +314,9 @@ public class faktur extends javax.swing.JFrame {
 
     private void data_fakturMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_fakturMouseClicked
         // TODO add your handling code here:
-        nomor_faktur.setText(data_faktur.getValueAt(data_faktur.getSelectedRow(),1).toString());
-        String tanggalDariTabel = data_faktur.getValueAt(data_faktur.getSelectedRow(), 2).toString();
-        kode_plg.setText(data_faktur.getValueAt(data_faktur.getSelectedRow(),3).toString());
+        nomor_faktur.setText(data_faktur.getValueAt(data_faktur.getSelectedRow(),0).toString());
+        String tanggalDariTabel = data_faktur.getValueAt(data_faktur.getSelectedRow(), 1).toString();
+        kode_plg.setSelectedItem(data_faktur.getValueAt(data_faktur.getSelectedRow(), 2).toString());
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Sesuaikan format tanggal dari tabel
             try {
@@ -359,7 +380,7 @@ public class faktur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField kode_plg;
+    private javax.swing.JComboBox<String> kode_plg;
     private javax.swing.JTextField nomor_faktur;
     private javax.swing.JButton simpan;
     private com.toedter.calendar.JDateChooser tgl_faktur;

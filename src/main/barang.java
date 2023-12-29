@@ -33,7 +33,7 @@ public class barang extends javax.swing.JFrame {
         kode_brg.setEditable(true);
     }
     
-    private void CariData(){
+    /*private void CariData(){
         try{
             st = cn.createStatement();
             rs = st.executeQuery("SELECT * FROM barang WHERE " + cmbcari.getSelectedItem().toString() + " Like '%" + cari.getText() + "%'");
@@ -66,7 +66,7 @@ public class barang extends javax.swing.JFrame {
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "error");
         }
-    }
+    }*/
     
         private void TampilData(){
         try{
@@ -74,20 +74,17 @@ public class barang extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM barang");
             
             DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("No.");
             model.addColumn("Kode Barang");
             model.addColumn("Nama Barang");
             model.addColumn("Stok Barang");
             model.addColumn("Harga Barang");
             
-            int no = 1;
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             model.setRowCount(0);
             
             while(rs.next()){
               Object[]data = {
-                no ++,
                 rs.getString("kode_brg"),
                 rs.getString("nama_brg"),
                 rs.getString("stock_brg"),
@@ -130,9 +127,6 @@ public class barang extends javax.swing.JFrame {
         batal = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         data_brg = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        cmbcari = new javax.swing.JComboBox<>();
-        cari = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,7 +156,8 @@ public class barang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("DRAF BARANG");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("BARANG");
 
         jLabel2.setText("KODE BARANG");
 
@@ -171,12 +166,6 @@ public class barang extends javax.swing.JFrame {
         jLabel4.setText("NAMA BARANG");
 
         jLabel5.setText("HARGA BARANG");
-
-        kode_brg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kode_brgActionPerformed(evt);
-            }
-        });
 
         simpan.setBackground(new java.awt.Color(0, 204, 51));
         simpan.setForeground(new java.awt.Color(255, 255, 255));
@@ -223,95 +212,71 @@ public class barang extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(data_brg);
 
-        jLabel6.setText("Cari");
-
-        cmbcari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kode_brg", "nama_brg", "stok_brg", "harga_brg" }));
-
-        cari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cariKeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(kode_brg, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(stock_brg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nama_brg, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stock_brg, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kode_brg, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nama_brg, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(harga_brg, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64))))
+                        .addGap(107, 107, 107))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(simpan)
+                        .addGap(34, 34, 34)
+                        .addComponent(batal)
+                        .addGap(38, 38, 38)
+                        .addComponent(hapus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(simpan)
-                                .addGap(89, 89, 89)
-                                .addComponent(hapus)
-                                .addGap(90, 90, 90)
-                                .addComponent(batal)
-                                .addGap(90, 90, 90))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(276, 276, 276)
-                        .addComponent(jLabel1)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(415, 415, 415)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(99, 99, 99)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
+                    .addComponent(kode_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(kode_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nama_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
+                    .addComponent(stock_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(stock_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(harga_brg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpan)
                     .addComponent(hapus)
                     .addComponent(batal))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(99, 99, 99))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -385,24 +350,15 @@ public class barang extends javax.swing.JFrame {
 
     private void data_brgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_brgMouseClicked
         // TODO add your handling code here:
-        kode_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),1).toString());
-        nama_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),2).toString());
-        stock_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),3).toString());
-        harga_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),4).toString());
+        kode_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),0).toString());
+        nama_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),1).toString());
+        stock_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),2).toString());
+        harga_brg.setText(data_brg.getValueAt(data_brg.getSelectedRow(),3).toString());
         
         
         kode_brg.setEditable(false);
         simpan.setText("Ubah");
     }//GEN-LAST:event_data_brgMouseClicked
-
-    private void cariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariKeyPressed
-        // TODO add your handling code here:
-        CariData();
-    }//GEN-LAST:event_cariKeyPressed
-
-    private void kode_brgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kode_brgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kode_brgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -439,8 +395,6 @@ public class barang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
-    private javax.swing.JTextField cari;
-    private javax.swing.JComboBox<String> cmbcari;
     private javax.swing.JTable data_brg;
     private javax.swing.JButton hapus;
     private javax.swing.JTextField harga_brg;
@@ -449,7 +403,6 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -36,64 +36,23 @@ public class pelanggan extends javax.swing.JFrame {
         kode_plg.setEditable(true);
     }
     
-     private void CariData(){
-        try{
-            st = cn.createStatement();
-            rs = st.executeQuery("SELECT * FROM pelanggan WHERE " +
-                        cmbcari.getSelectedItem().toString() +
-                        " Like '%" + cari.getText() + "%'");
-            
-            DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("No.");
-            model.addColumn("Kode Pelanggan");
-            model.addColumn("Nama");
-            model.addColumn("Alamat");
-            model.addColumn("No. Hp");
-
-            
-            int no = 1;
-            model.getDataVector().removeAllElements();
-            model.fireTableDataChanged();
-            model.setRowCount(0);
-            
-            while(rs.next()){
-              Object[]data = {
-                no ++,
-                rs.getString("kode_plg"),
-                rs.getString("nama_plg"),
-                rs.getString("alamat_plg"),
-                rs.getString("hp_plg"),
-
-              };
-              model.addRow(data);
-              data_plg.setModel(model);
-            }
-            
-        }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "error");
-        }
-    }
-    
-        private void TampilData(){
+    private void TampilData(){
         try{
             st = cn.createStatement();
             rs = st.executeQuery("SELECT * FROM pelanggan");
             
             DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("No.");
             model.addColumn("Kode Pelanggan");
             model.addColumn("Nama");
             model.addColumn("Alamat");
             model.addColumn("No. Hp");
             
-            int no = 1;
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             model.setRowCount(0);
             
             while(rs.next()){
               Object[]data = {
-                no ++,
                 rs.getString("kode_plg"),
                 rs.getString("nama_plg"),
                 rs.getString("alamat_plg"),
@@ -132,9 +91,6 @@ public class pelanggan extends javax.swing.JFrame {
         batal = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         data_plg = new javax.swing.JTable();
-        cmbcari = new javax.swing.JComboBox<>();
-        cari = new javax.swing.JTextField();
-        caridata = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,95 +144,72 @@ public class pelanggan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(data_plg);
 
-        cmbcari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kode_plg", "nama_plg", "alamat_plg", "hp_plg" }));
-
-        caridata.setText("cari");
-        caridata.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                caridataKeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(alamat_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hp_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nama_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(simpan)
-                        .addGap(34, 34, 34)
-                        .addComponent(hapus)
-                        .addGap(32, 32, 32)
-                        .addComponent(batal)
-                        .addGap(122, 122, 122))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(cmbcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addComponent(caridata)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(129, 129, 129))
-            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(alamat_plg, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nama_plg, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                .addComponent(kode_plg))
+                            .addComponent(hp_plg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(simpan)
+                        .addGap(18, 18, 18)
+                        .addComponent(batal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hapus)
+                        .addGap(26, 26, 26)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(304, 304, 304)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(nama_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(hp_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(alamat_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(simpan)
-                    .addComponent(hapus)
-                    .addComponent(batal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(caridata))
-                .addGap(46, 46, 46))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(kode_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(nama_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(alamat_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(hp_plg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(73, 73, 73)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(simpan)
+                            .addComponent(hapus)
+                            .addComponent(batal)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,17 +284,12 @@ public class pelanggan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_hapusActionPerformed
 
-    private void caridataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_caridataKeyPressed
-        // TODO add your handling code here:
-        CariData();
-    }//GEN-LAST:event_caridataKeyPressed
-
     private void data_plgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_plgMouseClicked
         // TODO add your handling code here:
-        kode_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),1).toString());
-        nama_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),2).toString());
-        alamat_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),3).toString());
-        hp_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),4).toString());
+        kode_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),0).toString());
+        nama_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),1).toString());
+        alamat_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),2).toString());
+        hp_plg.setText(data_plg.getValueAt(data_plg.getSelectedRow(),3).toString());
         
         
         kode_plg.setEditable(false);
@@ -404,9 +332,6 @@ public class pelanggan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamat_plg;
     private javax.swing.JButton batal;
-    private javax.swing.JTextField cari;
-    private javax.swing.JButton caridata;
-    private javax.swing.JComboBox<String> cmbcari;
     private javax.swing.JTable data_plg;
     private javax.swing.JButton hapus;
     private javax.swing.JTextField hp_plg;
