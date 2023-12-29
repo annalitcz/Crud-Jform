@@ -178,6 +178,8 @@ public class barang extends javax.swing.JFrame {
             }
         });
 
+        simpan.setBackground(new java.awt.Color(0, 204, 51));
+        simpan.setForeground(new java.awt.Color(255, 255, 255));
         simpan.setText("Simpan");
         simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +187,8 @@ public class barang extends javax.swing.JFrame {
             }
         });
 
+        hapus.setBackground(new java.awt.Color(255, 0, 0));
+        hapus.setForeground(new java.awt.Color(255, 255, 255));
         hapus.setText("Hapus");
         hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +196,8 @@ public class barang extends javax.swing.JFrame {
             }
         });
 
+        batal.setBackground(new java.awt.Color(0, 0, 255));
+        batal.setForeground(new java.awt.Color(255, 255, 255));
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,25 +360,22 @@ public class barang extends javax.swing.JFrame {
     private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         // TODO add your handling code here:
         if(kode_brg.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Silahlan Pilih Data yang akan dihapus !");
-        }else{
-            int jawab = JOptionPane.showConfirmDialog(null, 
-                    "Data ini akan dihapus, lanjutkan??","Konfirmasi",
-                    JOptionPane.YES_NO_OPTION);
-            if(jawab == 0){
-                try{
-                    st = cn.createStatement();
-                    String sql = "DELETE FROM barang WHERE kode_brg = '" + kode_brg.getText() + "'";
-                    st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
-                    TampilData();
-                    Bersih();
-                    
-                }catch(HeadlessException | SQLException e){
-                    JOptionPane.showMessageDialog(null, "error");
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data yang akan dihapus !");
+        } else {
+                int jawab = JOptionPane.showConfirmDialog(null, "Data ini akan dihapus, lanjutkan??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if(jawab == 0) {
+                    try {
+                        st = cn.createStatement();
+                        String sql = "DELETE FROM barang WHERE kode_brg = '" + kode_brg.getText() + "'";
+                        st.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
+                        TampilData();
+                        Bersih();
+                    } catch(HeadlessException | SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+                    }
                 }
             }
-        }
     }//GEN-LAST:event_hapusActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed

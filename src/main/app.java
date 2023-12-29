@@ -35,6 +35,8 @@ public class app extends javax.swing.JFrame {
         Tab4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         Tab5 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        Tab6 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -100,6 +102,18 @@ public class app extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("All Data");
+
+        Tab6.setText("All Data");
+        Tab6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tab6ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(Tab6);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,6 +158,12 @@ public class app extends javax.swing.JFrame {
         kwt.setVisible(true);
     }//GEN-LAST:event_Tab2ActionPerformed
 
+    private void Tab6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tab6ActionPerformed
+        // TODO add your handling code here:
+        AllData ald = new AllData();
+        ald.setVisible(true);
+    }//GEN-LAST:event_Tab6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -183,11 +203,13 @@ public class app extends javax.swing.JFrame {
     private javax.swing.JMenuItem Tab3;
     private javax.swing.JMenuItem Tab4;
     private javax.swing.JMenuItem Tab5;
+    private javax.swing.JMenuItem Tab6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables

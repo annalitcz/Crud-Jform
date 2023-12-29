@@ -163,7 +163,6 @@ public class faktur extends javax.swing.JFrame {
                                         .addGap(35, 35, 35)
                                         .addComponent(jLabel3))
                                     .addComponent(simpan))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
@@ -249,7 +248,23 @@ public class faktur extends javax.swing.JFrame {
 
     private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         // TODO add your handling code here:
-        Bersih();
+        if(nomor_faktur.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data yang akan dihapus !");
+        } else {
+                int jawab = JOptionPane.showConfirmDialog(null, "Data ini akan dihapus, lanjutkan??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if(jawab == 0) {
+                    try {
+                        st = cn.createStatement();
+                        String sql = "DELETE FROM faktur WHERE nomor_faktur = '" + nomor_faktur.getText() + "'";
+                        st.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
+                        TampilData();
+                        Bersih();
+                    } catch(HeadlessException | SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+                    }
+                }
+            }
     }//GEN-LAST:event_hapusActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed

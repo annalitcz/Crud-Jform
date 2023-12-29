@@ -109,21 +109,30 @@ public class kwitansi extends javax.swing.JFrame {
 
         jLabel4.setText("Nomor Faktur");
 
+        simpan.setBackground(new java.awt.Color(0, 204, 51));
+        simpan.setForeground(new java.awt.Color(255, 255, 255));
         simpan.setText("Simpan");
+        simpan.setMargin(new java.awt.Insets(5, 25, 5, 25));
         simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpanActionPerformed(evt);
             }
         });
 
+        hapus.setBackground(new java.awt.Color(255, 0, 0));
+        hapus.setForeground(new java.awt.Color(255, 255, 255));
         hapus.setText("Hapus");
+        hapus.setMargin(new java.awt.Insets(5, 25, 5, 25));
         hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hapusActionPerformed(evt);
             }
         });
 
+        batal.setBackground(new java.awt.Color(0, 0, 255));
+        batal.setForeground(new java.awt.Color(255, 255, 255));
         batal.setText("Batal");
+        batal.setMargin(new java.awt.Insets(5, 25, 5, 25));
         batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 batalActionPerformed(evt);
@@ -144,6 +153,12 @@ public class kwitansi extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(data_kwitansi);
+
+        tgl_kwi.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tgl_kwiPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,7 +208,7 @@ public class kwitansi extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addComponent(nomor_faktur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tgl_kwi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
                     .addComponent(hapus)
@@ -244,7 +259,23 @@ public class kwitansi extends javax.swing.JFrame {
 
     private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         // TODO add your handling code here:
-        Bersih();
+         if(nomer_kwi.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data yang akan dihapus !");
+        } else {
+                int jawab = JOptionPane.showConfirmDialog(null, "Data ini akan dihapus, lanjutkan??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if(jawab == 0) {
+                    try {
+                        st = cn.createStatement();
+                        String sql = "DELETE FROM kwitansi WHERE nomer_kwi = '" + nomer_kwi.getText() + "'";
+                        st.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
+                        TampilData();
+                        Bersih();
+                    } catch(HeadlessException | SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+                    }
+                }
+            }
     }//GEN-LAST:event_hapusActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
