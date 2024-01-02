@@ -302,26 +302,7 @@ public class kwitansi extends javax.swing.JFrame {
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         // TODO add your handling code here:
-        if(nomer_kwi.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Silahlan Pilih Data yang akan dihapus !");
-        }else{
-            int jawab = JOptionPane.showConfirmDialog(null, 
-                    "Data ini akan dihapus, lanjutkan??","Konfirmasi",
-                    JOptionPane.YES_NO_OPTION);
-            if(jawab == 0){
-                try{
-                    st = cn.createStatement();
-                    String sql = "DELETE FROM kwitansi WHERE nomer_kwi = '" + nomer_kwi.getText() + "'";
-                    st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
-                    TampilData();
-                    Bersih();
-                    
-                }catch(HeadlessException | SQLException e){
-                    JOptionPane.showMessageDialog(null, "error");
-                }
-            }
-        }
+        Bersih();
     }//GEN-LAST:event_batalActionPerformed
 
     private void tgl_kwiPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgl_kwiPropertyChange
