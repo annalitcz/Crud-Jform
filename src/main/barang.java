@@ -33,41 +33,6 @@ public class barang extends javax.swing.JFrame {
         kode_brg.setEditable(true);
     }
     
-    /*private void CariData(){
-        try{
-            st = cn.createStatement();
-            rs = st.executeQuery("SELECT * FROM barang WHERE " + cmbcari.getSelectedItem().toString() + " Like '%" + cari.getText() + "%'");
-            
-            DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("No.");
-            model.addColumn("Kode Barang");
-            model.addColumn("Nama Barang");
-            model.addColumn("Stok Barang");
-            model.addColumn("Harga Barang");
-
-            int no = 1;
-            model.getDataVector().removeAllElements();
-            model.fireTableDataChanged();
-            model.setRowCount(0);
-            
-            while(rs.next()){
-              Object[]data = {
-                no ++,
-                rs.getString("kode_brg"),
-                rs.getString("nama_brg"),
-                rs.getString("stok_brg"),
-                rs.getString("harga_brg"),
-
-              };
-              model.addRow(data);
-              data_brg.setModel(model);
-            }
-            
-        }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "error");
-        }
-    }*/
-    
         private void TampilData(){
         try{
             st = cn.createStatement();
